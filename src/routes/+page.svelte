@@ -54,7 +54,7 @@
 </div>
 
 
-<style lang="scss">
+<style>
   div.section {
     height: 40vw
   }
