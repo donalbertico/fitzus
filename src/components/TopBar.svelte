@@ -19,10 +19,15 @@
 </script>
 <style>
   .img-logo {
-    width: 100%;
-    height: 100%;
+    width: 15vw;
+    height: 13vw;
   }
   .logo-container {
     margin: 0.4%;
+  }
+  @media (max-width: 600px) {
+      div.corousel {
+        height: 35vw
+      }
   }
 </style>
