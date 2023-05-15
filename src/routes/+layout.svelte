@@ -10,13 +10,13 @@
   variant="static"
   color= 'primary'>
   <Section style="height:10vw">
+    <img class="img-logo" src='favicon.png' alt="logo"/>
   </Section>
   <Section style="padding:10px; height:10vw">
-    <div class="logo-container">
-      <img class="img-logo" src='favicon.png' alt="logo"/>
-    </div>
+    Contact Us
   </Section>
   <Section style="height:10vw">
+    About
   </Section>
 </BottomAppBar>
 <style>
@@ -29,12 +29,5 @@
     display: flex;
     flex-flow: column;
     justify-content: center;
-  }
-  .img-logo {
-    width: 25%;
-  }
-  .logo-container {
-    width: 100%;
-    height: 100%;
   }
 </style>
