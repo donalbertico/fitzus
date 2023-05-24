@@ -14,6 +14,7 @@
 		"@material/elevation": "^14.0.0",
 		"@smui-extra/autocomplete": "^7.0.0-beta.8",
 		"@smui-extra/bottom-app-bar": "^7.0.0-beta.8",
+		"@smui/card": "^7.0.0-beta.8",
 		"@smui/circular-progress": "^7.0.0-beta.8",
 		"@smui/icon-button": "^7.0.0-beta.8",
 		"@smui/layout-grid": "^7.0.0-beta.8",

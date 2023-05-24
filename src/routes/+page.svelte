@@ -1,5 +1,10 @@
 <script>
   import TopBar from '../components/TopBar.svelte'
+  import GymCard from '../components/GymCard.svelte'
+  import { onMount } from 'svelte';
+  import { getDb } from '$lib/firebase.ts'
+  import { collection, query, where, getDocs } from "firebase/firestore";
+  import LayoutGrid, { Cell } from '@smui/layout-grid';
   import Paper, { Title, Content } from '@smui/paper';
   import Autocomplete from '@smui-extra/autocomplete';
   import { Text } from '@smui/list';
@@ -7,7 +12,9 @@
   import CircularProgress from '@smui/circular-progress';
 
   let corousel_idx = 0
-  let value = ""
+  let value = ''
+  let db = getDb()
+
   const carousel_photos = [
     'banner/banner1.png',
     'banner/banner2.jpg',
@@ -16,6 +23,23 @@
   setInterval(() => {
     corousel_idx = (corousel_idx + 1) % carousel_photos.length
   },(10000));
+
+  let featured = []
+  onMount(() => {
+    getFeatruedGyms()
+  })
+
+  async function getFeatruedGyms() {
+    const q = query(collection(db, "gyms"), where("featured", "==", true));
+    const querySnapshot = await getDocs(q);
+    let result = []
+    querySnapshot.forEach((doc) => {
+      result.push({id:doc.id,...doc.data()})
+    });
+    console.log(result);
+
+    featured = result
+  }
 
 </script>
 
@@ -46,13 +70,19 @@
       </Paper>
     </div>
   </div>
+  <LayoutGrid>
+    {#each featured as gym}
+      <Cell spanDevices={{desktop: 4, phone: 6 }}>
+        <GymCard gym={gym}/>
+      </Cell>
+    {/each}
+  </LayoutGrid>
   <div class="section">
     <div style="height:100%">
       <img style="height:120%;margin-left:25vw;" src="banner/banner3.png" />
     </div>
   </div>
 </div>
-
 
 <style>
   div.section {

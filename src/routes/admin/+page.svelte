@@ -1,8 +1,8 @@
 
 <div id="panorama"></div>
 hola
-<div bind:this={pepe}>
-
+<div>
+  <button on:click="{uploadGyms}"> pego </button>
 </div>
 <style>
   #panorama {
@@ -11,10 +11,51 @@ hola
   }
 </style>
 <script>
+  import { collection, addDoc } from "firebase/firestore";
   import { onMount } from 'svelte';
-  let pepe
-  const imgUrl = new URL('../../2.jpg', import.meta.url).href
-  console.log(imgUrl);
+  import { getDb } from '$lib/firebase.ts';
+  // const imgUrl = new URL('../../2.jpg', import.meta.url).href
+  // console.log(imgUrl);
+  let db = getDb()
+  let gym = {
+    name: "gym 1",
+    featured: true,
+    scenes : [
+      {
+          title : "area 1",
+          panorama : "https://meetfreed4.s3.amazonaws.com/uidk_0.jpg",
+          hotSpots : [
+            { pitch : 5,
+              text : "area1",
+              sceneId: "1"
+            },
+            { pitch : 5,
+              text : "area2",
+              sceneId: "1"
+            }
+          ]
+      },
+      {
+        title : "area 2",
+        panorama : "https://meetfreed4.s3.amazonaws.com/uidk_0.jpg",
+        hotSpots : [
+          { pitch : 5,
+            text : "area1",
+            sceneId: "0"
+          }
+        ]
+      }
+    ]
+  }
+
+  let uploadGyms = () => {
+    addGym()
+  }
+
+  async function addGym() {
+      const docRef = await addDoc(collection(db, "gyms"), gym)
+      console.log(docRef.id);
+  }
 
   onMount(() => {
     window.pannellum.viewer('panorama', {
@@ -31,7 +72,7 @@ hola
             "pitch": -3,
             "yaw": 117,
             "type": "equirectangular",
-            "panorama": imgUrl,
+            "panorama": "https://meetfreed4.s3.amazonaws.com/uidk_0.jpg",
             "horizonPitch ": 0,
             "horizonRoll " : 100,
             "hotSpots": [
