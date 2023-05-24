@@ -1,3 +1,8 @@
+<svelte:head>
+  <script defer async
+    src="https://maps.googleapis.com/maps/api/js?key={import.meta.env.VITE_GOOGLE_MAPS}&callback=initMap">
+  </script>
+</svelte:head>
 <script>
   import TopBar from '../components/TopBar.svelte'
   import BottomAppBar, { Section } from '@smui-extra/bottom-app-bar';

@@ -36,8 +36,6 @@
     querySnapshot.forEach((doc) => {
       result.push({id:doc.id,...doc.data()})
     });
-    console.log(result);
-
     featured = result
   }
 
@@ -82,6 +80,8 @@
       <img style="height:120%;margin-left:25vw;" src="banner/banner3.png" />
     </div>
   </div>
+  <div>%PUBLIC_GOOGLE_MAPS%</div>
+  <div>{import.meta.env.VITE_GOOGLE_MAPS}</div>
 </div>
 
 <style>

@@ -14,8 +14,7 @@ hola
   import { collection, addDoc } from "firebase/firestore";
   import { onMount } from 'svelte';
   import { getDb } from '$lib/firebase.ts';
-  // const imgUrl = new URL('../../2.jpg', import.meta.url).href
-  // console.log(imgUrl);
+
   let db = getDb()
   let gym = {
     name: "gym 1",
