@@ -125,6 +125,7 @@
   .centered-title {
     display: flex;
     align-items: center;
+    white-space: nowrap;
     width: 30%
   }
   .body {
