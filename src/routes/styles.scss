@@ -13,21 +13,28 @@ html {
 }
 h1 {
   @include typography.typography('headline1');
+  font-size: 5vh
 }
 h2 {
   @include typography.typography('headline2');
+  font-size: 4vh
 }
 h3 {
   @include typography.typography('headline3');
+
+  font-size: 3vh
 }
 h4 {
   @include typography.typography('headline4');
+  font-size: 2vh
 }
 h5 {
   @include typography.typography('headline5');
+  font-size: 2vh
 }
 h6 {
   @include typography.typography('headline6');
+  font-size: 2vh
 }
 caption {
   @include typography.typography('caption');

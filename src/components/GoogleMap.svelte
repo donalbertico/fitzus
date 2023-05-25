@@ -1,13 +1,20 @@
 <script>
   import { onMount } from 'svelte';
   let container;
+  export let location;
+  export let gym;
   onMount(async () => {
-    let zoom = 8;
-    let center = {lat: -34.397, lng: 150.644};
+    let zoom = 15;
+    let center = {lat: location.lat, lng: location.lng};
 		let map = new google.maps.Map(container, {
       zoom,
       center
 		});
+    new google.maps.Marker({
+      position: center,
+      map,
+      title: gym.name,
+    });
 	});
 </script>
 <div bind:this={container}>

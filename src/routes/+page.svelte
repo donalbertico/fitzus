@@ -47,7 +47,7 @@
       <img class="corousel" {src} alt=''/>
     {/each}
   </div>
-  <div style="height: 30vw">
+  <div style="height: 15vw">
     <div class="search_box">
       <Paper color="primary" elevation=5>
         <div class="horizontal">
@@ -68,25 +68,34 @@
       </Paper>
     </div>
   </div>
-  <LayoutGrid>
-    {#each featured as gym}
-      <Cell spanDevices={{desktop: 4, phone: 6 }}>
-        <GymCard gym={gym}/>
-      </Cell>
-    {/each}
-  </LayoutGrid>
+  <div class="horizontal">
+    <div style="width:80%"></div>
+    <div class="centered-title">
+      <h3>Our Partners</h3>
+    </div>
+    <div style="width:80%"></div>
+  </div>
+  <div style="margin-bottom:10vh">
+    <LayoutGrid>
+      {#each featured as gym}
+        <Cell spanDevices={{desktop: 4, phone: 6 }}>
+          <GymCard gym={gym}/>
+        </Cell>
+      {/each}
+    </LayoutGrid>
+  </div>
   <div class="section">
     <div style="height:100%">
       <img style="height:120%;margin-left:25vw;" src="banner/banner3.png" />
     </div>
   </div>
-  <div>%PUBLIC_GOOGLE_MAPS%</div>
-  <div>{import.meta.env.VITE_GOOGLE_MAPS}</div>
 </div>
 
-<style>
+<style lang="scss">
+  @import 'styles.scss';
+
   div.section {
-    height: 40vw
+    height: 45vw
   }
   div.corousel {
     height: 30vw
@@ -112,6 +121,11 @@
   .horizontal {
     display: flex;
     flex-direction: horizontal
+  }
+  .centered-title {
+    display: flex;
+    align-items: center;
+    width: 30%
   }
   .body {
     margin-bottom: 15vh

@@ -19,9 +19,9 @@
     </Section>
     <Section style="height:15vh">
       <div class="bottom">
-        <small>Contact Us</small>
-        <small>About</small>
-        <small>Use Politics</small>
+        <h5>Contact Us</h5>
+        <h5>About</h5>
+        <h5>Use Politics</h5>
       </div>
     </Section>
     <Section style="height:15vh">
@@ -32,6 +32,9 @@
 
 <style lang="scss">
   @import 'styles.scss';
+  h5 {
+    margin: 0
+  }
   div.bottom {
     padding: 1vw;
     display: flex;
