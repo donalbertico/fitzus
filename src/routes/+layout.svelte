@@ -15,7 +15,7 @@
     variant="static"
     color= 'primary'>
     <Section style="height:15vh">
-      <img style="height:60%;width:10vh" class="img-logo" src='favicon.png' alt="logo"/>
+      <img style="height:60%;width:10vh" class="img-logo" src='/favicon.png' alt="logo"/>
     </Section>
     <Section style="height:15vh">
       <div class="bottom">

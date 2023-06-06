@@ -4,7 +4,7 @@
       <IconButton class="material-icons">menu</IconButton>
     </Section>
     <a class="logo-container" href="/">
-      <img class="img-logo" src='favicon.png' alt="logo"/>
+      <img class="img-logo" src='/favicon.png' alt="logo"/>
     </a>
     <Section align="end" toolbar>
       <IconButton class="material-icons" aria-label="Download">login</IconButton>

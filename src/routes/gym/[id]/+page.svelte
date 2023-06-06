@@ -3,47 +3,25 @@
   import IconButton from '@smui/icon-button'
   import Button, { Label } from '@smui/button';
   import GoogleMap from '../../../components/GoogleMap.svelte'
+  import PanoView from '../../../components/PanoView.svelte'
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
+
 
   export let data;
   let googleReady;
   let tour = {}
   let gym = data.gym
-  let scenes = [];
+  let scenes = data.scenes;
   let location;
 
-  console.log(gym.scenes);
-
-  gym.scenes.forEach(sc => {
-    let hotSpots = []
-    sc.type = "equirectangular"
-    sc.panorama = "https://meetfreed4.s3.amazonaws.com/"+sc.panorama
-    sc.hotSpots.forEach(hs => {
-      hotSpots.push({
-        ...hs,
-        type: "scene"
-      })
-    })
-    sc.hotSpots = hotSpots
-    scenes.push(sc)
-  })
-
   onMount(() => {
-      window.pannellum.viewer('panorama', {
-        "default" : {
-          "firstScene": "0",
-          "author": "Fitsuz",
-          "autoLoad": true,
-          "sceneFadeDuration": 1000
-        },
-        "scenes" : gym.scenes
-      })
       location = { lat: gym.lat, lng: gym.lng}
       googleReady = true
   })
 </script>
-
-<div class="main-image">
-  <img class="banner" src="../banner/gym.jpg" alt=''/>
+<div class="tour-container">
+  <PanoView gymId={gym.id} scenesData={scenes}/>
 </div>
 <div class="info">
   <div style="width:100%;display:flex;display-orientation:vertical">
@@ -78,9 +56,6 @@
     {/if}
   </div>
 </div>
-<div class="tour-container">
-  <div id="panorama" class="panorama"></div>
-</div>
 
 <style lang="scss">
   @import '../../styles.scss';
@@ -109,15 +84,6 @@
   .map-container {
     width: 70vw;
     height: 35vh;
-  }
-  div.tour-container {
-    margin : 3vw;
-    margin-left : 5vw;
-    margin-right : 5vw;
-  }
-  div.panorama {
-    width: 100%;
-    height: 75vh;
   }
   @media (max-width: 1680px) {
     .main-image {
