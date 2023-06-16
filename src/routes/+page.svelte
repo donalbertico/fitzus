@@ -1,3 +1,6 @@
+<svelte:head>
+  <title>Fitsuz</title>
+</svelte:head>
 <script>
   import TopBar from '../components/TopBar.svelte'
   import GymCard from '../components/GymCard.svelte'
@@ -8,11 +11,13 @@
   import Paper, { Title, Content } from '@smui/paper';
   import Autocomplete from '@smui-extra/autocomplete';
   import { Text } from '@smui/list';
+  import { language } from '$lib/stores.js'
   import IconButton from '@smui/icon-button'
   import CircularProgress from '@smui/circular-progress';
 
   let corousel_idx = 0
   let value = ''
+  let lang = 'en';
   let db = getDb()
 
   const carousel_photos = [
@@ -29,7 +34,7 @@
     getFeatruedGyms()
   })
 
-  async function getFeatruedGyms() {
+  const getFeatruedGyms = async() => {
     const q = query(collection(db, "gyms"), where("featured", "==", true));
     const querySnapshot = await getDocs(q);
     let result = []
@@ -39,6 +44,8 @@
     featured = result
   }
 
+  language.subscribe( v => { lang = v })
+
 </script>
 
 <div class="body">
@@ -47,33 +54,37 @@
       <img class="corousel" {src} alt=''/>
     {/each}
   </div>
-  <div style="height: 15vw">
-    <div class="search_box">
-      <Paper color="primary" elevation=5>
-        <div class="horizontal">
-          <IconButton class="material-icons">search</IconButton>
-          <Autocomplete
-            bind:value
-            showMenuWithNoInput={false}
-            style="width: 100%"
-            textfield$style="width: 100%;"
-            label="Find a session near to you">
-            <Text
-              slot="loading"
-              style="display: flex; width: 100%; justify-content: center; align-items: center;">
-              <CircularProgress style="height: 24px; width: 24px;" indeterminate />
-            </Text>
-          </Autocomplete>
-        </div>
-      </Paper>
+  <div class="horizontal">
+    <div class="centered-title">
+      <h3>{(lang == 'en') ? 'Find the place to exersice closer to you' : 'Encontre a academia mais próxima!'}</h3>
     </div>
   </div>
+  <div class="search-box-container">
+    <img class="search" src="https://meetfreed4.s3.amazonaws.com/public/wallpaper1.jpg"/>
+      <div class="search-box">
+        <Paper color="primary" style="padding:0.8vh; padding-bottom:2vh" elevation=5>
+          <div style="display:flex; flex-direction:horizontal">
+            <IconButton class="material-icons">search</IconButton>
+            <Autocomplete
+              bind:value
+              showMenuWithNoInput={false}
+              style="width: 90%"
+              textfield$style="width: 90%;"
+              label={(lang == 'en')? 'Find gyms near you' : 'Escolher academia'}>
+              <Text
+                slot="loading"
+                style="display: flex; width: 100%; justify-content: center; align-items: center;">
+                <CircularProgress style="height: 24px; width: 24px;" indeterminate />
+              </Text>
+            </Autocomplete>
+          </div>
+        </Paper>
+      </div>
+  </div>
   <div class="horizontal">
-    <div style="width:80%"></div>
     <div class="centered-title">
-      <h3>Our Partners</h3>
+      <h2>{(lang == 'en') ? 'Our Partners' : 'Nossas academias'}</h2>
     </div>
-    <div style="width:80%"></div>
   </div>
   <div style="margin-bottom:10vh">
     <LayoutGrid>
@@ -98,7 +109,8 @@
     height: 45vw
   }
   div.corousel {
-    height: 30vw
+    height: 28vw;
+    margin: 1vw;
   }
   img.corousel {
     height: 100%;
@@ -106,27 +118,42 @@
     object-fit: cover;
     object-position: 50% 0%;
   }
-  .search_box {
-    position: relative;
-    top: -7vh;
-    width: 80vw;
+  img.search {
+    width: 100%;
     height: 100%;
-    margin-left: 10vw;
+    object-fit: cover;
+    object-position: 50% 20%;
+    opacity: .8;
+  }
+  .search-box-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40vh;
+    margin: 1vw;
+  }
+  .search-box {
+    position: absolute;
+    width: 50vw;
   }
   @media (max-width: 1680px) {
       div.corousel {
         height: 35vw
       }
   }
+  @media (max-width: 800px) {
+    .search-box {
+      position: absolute;
+      width: 75vw;
+    }
+    div.corousel {
+      height: 50vw
+    }
+  }
   .horizontal {
     display: flex;
-    flex-direction: horizontal
-  }
-  .centered-title {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    width: 30%
+    flex-direction: horizontal;
+    justify-content: center
   }
   .body {
     margin-bottom: 15vh

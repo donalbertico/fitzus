@@ -5,7 +5,14 @@
 </svelte:head>
 <script>
   import TopBar from '../components/TopBar.svelte'
+  import { language } from '$lib/stores.js'
+  import { onMount } from 'svelte';
   import BottomAppBar, { Section } from '@smui-extra/bottom-app-bar';
+
+  onMount(() => {
+    language.set(window.navigator.language.split('-')[0])
+    console.log(window.navigator.language.split('-')[0]);
+  })
 </script>
 
 <main>

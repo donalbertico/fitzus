@@ -6,6 +6,7 @@
   --mdc-theme-secondary: #676778;
 }
 small {
+  @include typography.typography('body1');
   padding-bottom: 1vw;
 }
 html {

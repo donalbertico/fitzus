@@ -11,8 +11,7 @@
   export let gym;
 
   let navigateToGym = () => {
-    let params = new URLSearchParams({gym : JSON.stringify(gym)}).toString()
-    goto(`gym/${gym.id}?${params}`)
+    goto(`gym/${gym.id}`)
   }
 </script>
 <Card on:click="{navigateToGym}">

@@ -1,13 +1,11 @@
 import { error } from '@sveltejs/kit';
-import { getDb } from '$lib/firebase.ts'
-import { doc, getDoc } from "firebase/firestore";
-
-let db = getDb()
-
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ url, fetch, params }) {
     if (params.id) {
+        return {
+          id : params.id
+        }
         let gymData = url.searchParams.get('gym')
         if (gymData) {
           const response = await fetch(`https://meetfreed4.s3.amazonaws.com/${params.id}/scenes.json`);

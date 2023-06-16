@@ -1,60 +1,143 @@
 <script>
+  import { doc, getDoc } from "firebase/firestore";
   import { onMount } from 'svelte';
   import IconButton from '@smui/icon-button'
   import Button, { Label } from '@smui/button';
+  import CircularProgress from '@smui/circular-progress';
+  import LayoutGrid, { Cell } from '@smui/layout-grid';
+  import Paper, { Title, Content } from '@smui/paper';
   import GoogleMap from '../../../components/GoogleMap.svelte'
   import PanoView from '../../../components/PanoView.svelte'
+  import { getDb } from '$lib/firebase.ts'
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+  import { language } from '$lib/stores.js'
+  import Carousel from 'svelte-carousel'
 
+  let db = getDb()
 
   export let data;
   let googleReady;
-  let tour = {}
-  let gym = data.gym
-  let scenes = data.scenes;
+  let gym;
+  let lang;
+  let scenes;
+  let scenesLoaded = false
+  let gymLoaded = false
   let location;
+  let carousel;
 
-  onMount(() => {
+  const loadData = async () => {
+    const docRef = doc(db, "gyms", data.id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const response = await fetch(`https://meetfreed4.s3.amazonaws.com/${data.id}/scenes.json`);
+      const scenesData = await response.json();
+      gym = {id:data.id,...docSnap.data()}
+      scenes = scenesData
+      gymLoaded = true
       location = { lat: gym.lat, lng: gym.lng}
       googleReady = true
-  })
+    }
+  }
+
+  const loadScenes = async () => {
+    const response = await fetch(`https://meetfreed4.s3.amazonaws.com/${data.id}/scenes.json`);
+    try {
+      scenes = await response.json();
+      scenesLoaded = true
+      loadData()
+    }catch (e) {
+      loaded = false
+    }
+  }
+  loadScenes()
+
+  language.subscribe( v => { lang = v })
 </script>
+<svelte:head>
+  <title>{gym ? gym?.name+' : fitsuz' : 'fitsuz'}</title>
+</svelte:head>
+{#if gymLoaded}
+  <div class="title">
+    <caption class="caption">Academia</caption>
+    <h1 class="name">{gym ? gym.name : ''}</h1>
+  </div>
+  <div>
+    <LayoutGrid style="margin:1%">
+      <Cell spanDevices={{desktop:8, tablet:12, mobile:12}}>
+        <Carousel
+          autoplay>
+          <div slot="prev"></div>
+          <img class="gym-pic" src="/banner/gym.jpg"/>
+          <img class="gym-pic" src="/banner/gym.jpg"/>
+          <img class="gym-pic" src="/banner/gym.jpg"/>
+          <div slot="next"></div>
+        </Carousel>
+      </Cell>
+      <Cell spanDevices={{desktop:4, tablet:12, mobile:12}}>
+        <div style="margin:1%; width:90%">
+            <Paper color="primary" style="padding:0.8vh, width:90%" elevation=2>
+              <div class="horizontal">
+                <div>
+                  <IconButton class="material-icons">schedule</IconButton>
+                </div>
+                <div>
+                  <h4 style="margin-top:1%; margin-bottom:1%">Horario de funcionament</h4>
+                  <div class="horizontal">
+                    <div style="width:60%">
+                      <h6>Seg a Sex</h6>
+                      <h6>Seb</h6>
+                      <h6>Dom/Feriados</h6>
+                    </div>
+                    <div>
+                      <h6 style="display:block">6h - 23h</h6>
+                      <h6 style="display:block">8h - 17h</h6>
+                      <h6 style="display:block">8h - 14h</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Paper>
+            <div style="height:2vh"></div>
+            <Paper color="primary" style="padding:0.8vh, width:90%, margin-top: 20vh" elevation=2>
+              <div class="horizontal">
+                <div>
+                  <IconButton class="material-icons">location_on</IconButton>
+                </div>
+                <div class="address">
+                  <h4 style="margin-top:0; margin-bottom:1%">Endereço</h4>
+                  <caption style="display:block">Quadra QNN 31 Área Especial E - Ceilândia Norte Brasília</caption>
+                  <div class="map-container">
+                    {#if googleReady && gymLoaded}
+                      <GoogleMap location={location} gym={gym}/>
+                    {:else}
+                      <div style="display: flex; justify-content: center; align-items: center; height:50vh">
+                        <CircularProgress style="height: 70px; width: 70px;"  indeterminate/>
+                      </div>
+                    {/if}
+                  </div>
+                </div>
+              </div>
+            </Paper>
+            <div style="margin-top:3%">
+              <div style="display:flex; justify-content:center">
+                <Button h3 variant="raised" color="secondary">
+                  <Label>{(lang == 'en') ? "Book a Free Session" : "sessão gratuita"}</Label>
+                </Button>
+              </div>
+            </div>
+        </div>
+      </Cell>
+    </LayoutGrid>
+  </div>
+{/if}
 <div class="tour-container">
-  <PanoView gymId={gym.id} scenesData={scenes}/>
-</div>
-<div class="info">
-  <div style="width:100%;display:flex;display-orientation:vertical">
-    <div style="width:5vw"></div>
-    <div>
-      <h2>{data.gym ? data.gym.name : ''}</h2>
-      <div class="horizontal">
-        <IconButton class="material-icons">phone</IconButton>
-        <h6>+44 xxx xxx xx</h6>
-      </div>
-      <div class="horizontal">
-        <IconButton class="material-icons">public</IconButton>
-        <h6> www.vibe.com</h6>
-      </div>
-      <div class="horizontal">
-        <IconButton class="material-icons">date_range</IconButton>
-        <h6> 8h00 - 20h00</h6>
-      </div>
-      <div class="horizontal">
-        <div></div>
-        <Button h3 variant="raised" color="secondary">
-          <Label>Book a Free Session</Label>
-        </Button>
-        <div></div>
-      </div>
-    </div>
-    <div style="width:20%"></div>
+  <div class="title">
+    <h2 class="name">Tour Virtual</h2>
   </div>
-  <div class="map-container">
-    {#if googleReady}
-      <GoogleMap location={location} gym={gym}/>
-    {/if}
-  </div>
+  {#if scenesLoaded}
+    <PanoView gymId={data.id} scenesData={scenes}/>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -62,38 +145,75 @@
   .main-image {
     height: 20vw
   }
-  h6 {
-    margin: 1vw;
-  }
-  img.banner {
-    height: 100%;
+  .gym-pic {
     width: 100%;
-    object-fit: cover;
-    object-position: 50% 0%;
+    height: 100%;
   }
-  div.info {
-    padding-left : 5vw;
-    padding-right : 5vw;
-    display: flex;
-    flex-direction: row
+  h1.name {
+    margin :0;
+    height: 8vh;
+  }
+  h6 {
+    margin : 0
   }
   div.horizontal {
     display: flex;
     flex-direction: horizontal;
   }
+  .address {
+    width: 85%;
+    height: 30vh;
+    margin : 1%;
+  }
   .map-container {
-    width: 70vw;
-    height: 35vh;
+    height:80%;
+    width:95%
+  }
+  div.title {
+    margin-left: 3%;
+    margin-top: 2%;
+    margin-bottom: -1%
   }
   @media (max-width: 1680px) {
     .main-image {
       height: 38vw
     }
+  }
+  @media (max-width: 800px) {
     div.info {
-      padding-left : 3vw;
-      padding-right : 3vw;
+      width: 100%;
       display: flex;
-      flex-direction: row
+      justify-content: center
+    }
+    .gym-pic {
+      width: 100%;
+      height: 40vh;
+      object-fit: fill;
+    }
+    .map-container {
+      width: 100%;
+      height: 35vh;
+      margin : 1%;
+    }
+    .title {
+      margin-left: 3%;
+      margin-top: 2%;
+      margin-bottom: -1%
+    }
+    .cap {
+      margin-top: 1vh;
+      margin-bottom:-8vh;
+    }
+    h1.name {
+      margin :0;
+      height: 10vh;
+    }
+    .map-container {
+      height:65%;
+      width:100%
+    }
+    .caption {
+      margin-bottom: -5vh
     }
   }
 </style>

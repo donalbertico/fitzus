@@ -4,7 +4,7 @@
 
   export let scenesData;
   export let gymId;
-  let panoEelement;
+  let panoElement;
   let Marzipano;
   let viewer;
   let scenes;
@@ -25,7 +25,7 @@
       targetFov: Math.PI/2
     });
 
-    viewer = new Marzipano.Viewer(panoEelement, viewerOpts)
+    viewer = new Marzipano.Viewer(panoElement, viewerOpts)
     loadScenes()
   })
 
@@ -61,6 +61,9 @@
 
     let canvas = document.getElementsByTagName('canvas')[0]
     canvas.classList.add('tour-container')
+
+    let hotspotDiv = panoElement.children ? panoElement.children[1] : canvas
+    hotspotDiv.classList.add('hotspot-div')
     loading = false
   }
 
@@ -127,8 +130,7 @@
     <CircularProgress style="height: 70px; width: 70px;"  indeterminate/>
   </div>
 {/if}
-<div class="panorama" bind:this={panoEelement}></div>
-
+<div class="panorama" bind:this={panoElement}></div>
 <style>
   div.panorama {
     width: 100%;
