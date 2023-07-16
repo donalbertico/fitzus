@@ -79,20 +79,20 @@
             <Paper color="primary" style="padding:0.8vh, width:90%" elevation=2>
               <div class="horizontal">
                 <div>
-                  <IconButton class="material-icons">schedule</IconButton>
+                  <IconButton style="margin-left:-1vh" class="material-icons">schedule</IconButton>
                 </div>
                 <div>
-                  <h4 style="margin-top:1%; margin-bottom:1%">Horario de funcionament</h4>
+                  <h4 style="margin-top:1%; margin-bottom:1vh">Horario de funcionament</h4>
                   <div class="horizontal">
                     <div style="width:60%">
-                      <h6>Seg a Sex</h6>
-                      <h6>Seb</h6>
-                      <h6>Dom/Feriados</h6>
+                      <h5>Seg a Sex</h5>
+                      <h5>Seb</h5>
+                      <h5>Dom/Feriados</h5>
                     </div>
                     <div>
-                      <h6 style="display:block">6h - 23h</h6>
-                      <h6 style="display:block">8h - 17h</h6>
-                      <h6 style="display:block">8h - 14h</h6>
+                      <h5 style="display:block">6h - 23h</h5>
+                      <h5 style="display:block">8h - 17h</h5>
+                      <h5 style="display:block">8h - 14h</h5>
                     </div>
                   </div>
                 </div>
@@ -102,10 +102,10 @@
             <Paper color="primary" style="padding:0.8vh, width:90%, margin-top: 20vh" elevation=2>
               <div class="horizontal">
                 <div>
-                  <IconButton class="material-icons">location_on</IconButton>
+                  <IconButton style="margin-left:-1.5vh" class="material-icons">location_on</IconButton>
                 </div>
                 <div class="address">
-                  <h4 style="margin-top:0; margin-bottom:1%">Endereço</h4>
+                  <h4 style="margin-top:0; margin-bottom:1vh">Endereço</h4>
                   <caption style="display:block">Quadra QNN 31 Área Especial E - Ceilândia Norte Brasília</caption>
                   <div class="map-container">
                     {#if googleReady && gymLoaded}
@@ -153,12 +153,13 @@
     margin :0;
     height: 8vh;
   }
-  h6 {
-    margin : 0
+  h5 {
+    margin : 1vh
   }
   div.horizontal {
     display: flex;
     flex-direction: horizontal;
+    margin-top: -1vh
   }
   .address {
     width: 85%;
