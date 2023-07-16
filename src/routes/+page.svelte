@@ -49,56 +49,7 @@
 </script>
 
 <div class="body">
-  <div class="corousel">
-    {#each [carousel_photos[corousel_idx]] as src (corousel_idx)}
-      <img class="corousel" {src} alt=''/>
-    {/each}
-  </div>
-  <div class="horizontal">
-    <div class="centered-title">
-      <h3>{(lang == 'en') ? 'Find the place to exersice closer to you' : 'Encontre a academia mais próxima!'}</h3>
-    </div>
-  </div>
-  <div class="search-box-container">
-    <img class="search" src="https://meetfreed4.s3.amazonaws.com/public/wallpaper1.jpg"/>
-      <div class="search-box">
-        <Paper color="primary" style="padding:0.8vh; padding-bottom:2vh" elevation=5>
-          <div style="display:flex; flex-direction:horizontal">
-            <IconButton class="material-icons">search</IconButton>
-            <Autocomplete
-              bind:value
-              showMenuWithNoInput={false}
-              style="width: 90%"
-              textfield$style="width: 90%;"
-              label={(lang == 'en')? 'Find gyms near you' : 'Escolher academia'}>
-              <Text
-                slot="loading"
-                style="display: flex; width: 100%; justify-content: center; align-items: center;">
-                <CircularProgress style="height: 24px; width: 24px;" indeterminate />
-              </Text>
-            </Autocomplete>
-          </div>
-        </Paper>
-      </div>
-  </div>
-  <div class="horizontal">
-    <div class="centered-title">
-      <h2>{(lang == 'en') ? 'Our Partners' : 'Nossas academias'}</h2>
-    </div>
-  </div>
-  <div style="margin-bottom:10vh">
-    <LayoutGrid>
-      {#each featured as gym}
-        <Cell spanDevices={{desktop: 4, phone: 6 }}>
-          <GymCard gym={gym}/>
-        </Cell>
-      {/each}
-    </LayoutGrid>
-  </div>
-  <div class="section">
-    <div style="height:100%">
-      <img style="height:120%;margin-left:25vw;" src="banner/banner3.png" />
-    </div>
+  <div class="full-height">
   </div>
 </div>
 
@@ -154,6 +105,11 @@
     display: flex;
     flex-direction: horizontal;
     justify-content: center
+  }
+  div.full-height {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
   }
   .body {
     margin-bottom: 15vh

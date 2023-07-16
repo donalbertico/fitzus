@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
     auth: {
         type: 'oauth2',
         user: 'request@fitsuz.com',
-        pass: 'Fitsuz2023@'
+        pass: 'asdfasdf'
     }
 });
 
