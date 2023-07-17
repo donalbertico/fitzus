@@ -24,9 +24,9 @@ hola
   <div class="full-height">
     <AnimatedElement />
   </div>
-  <div class="full-height">
+  <!-- <div class="full-height">
     <AnimatedElement />
-  </div>
+  </div> -->
 
 </div>
 <style lang="scss">

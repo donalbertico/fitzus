@@ -21,6 +21,7 @@
 		"@smui/icon-button": "^7.0.0-beta.8",
 		"@smui/layout-grid": "^7.0.0-beta.8",
 		"@smui/list": "^7.0.0-beta.8",
+		"@smui/menu": "^7.0.0-beta.14",
 		"@smui/paper": "^7.0.0-beta.8",
 		"@smui/tooltip": "^7.0.0-beta.8",
 		"@smui/top-app-bar": "^7.0.0-beta.8",
