@@ -1,10 +1,4 @@
-hola
 <div>
-<nav>
-    <a use:scrollTo={'home'}>Home</a>
-    <a use:scrollTo={'about'}>About</a>
-    <a use:scrollTo={{ ref: 'blog', duration: 1000 }}>Blog</a>
-</nav>
 <!--
   <section style="height:50vh" use:scrollRef={'home'}>
     home
@@ -40,7 +34,6 @@ hola
 <script>
   import { collection, addDoc } from "firebase/firestore";
   import AnimatedElement from '../../components/AnimatedElement.svelte'
-  import { scrollTo, scrollRef, scrollTop } from 'svelte-scrolling'
   import Tooltip, { Wrapper } from '@smui/tooltip'
   import { fade } from 'svelte/transition';
   import { inview } from 'svelte-inview';
